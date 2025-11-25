@@ -14,3 +14,38 @@
 #Installationshinweise im Code: verwendete EV3-Ports und benötigte Bibliotheken dokumentieren
 #Teilnehmer am Projekt: Namen in Zeile 2 (nach <code>#!/usr/bin/env pybricks-micropython</code>)
 
+
+#!/usr/bin/env pybricks-micropython
+# Programm 8: Ultraschallsensor – Distanzabhängiger Warnton
+
+from pybricks.hubs import EV3Brick
+from pybricks.ev3devices import UltrasonicSensor
+from pybricks.parameters import Port
+from pybricks.tools import wait
+
+# Initialisierung
+ev3   = EV3Brick()
+ultra = UltrasonicSensor(Port.S4)   # Ultraschallsensor an Port 4
+
+# Endlosschleife
+while True:
+    distance_mm = ultra.distance()      # Entfernung in Millimetern
+    distance_cm = distance_mm // 10     # grobe cm-Anzeige
+
+    # Display aktualisieren
+    ev3.screen.clear()
+    ev3.screen.print("Abstand: {} cm".format(distance_cm))
+
+    # Distanzabhängiger Warnton
+    if distance_mm < 100:               # < 10 cm
+        ev3.speaker.beep(frequency=1000, duration=100)
+        wait(100)
+        ev3.screen.print("ALARM!")
+    elif distance_mm < 300:             # 10–30 cm
+        ev3.speaker.beep(frequency=500, duration=100)
+        wait(300)
+        ev3.screen.print("WARNUNG!")
+    else:                               # > 30 cm
+        ev3.speaker.beep(frequency=250, duration=100)
+        wait(700)
+        ev3.screen.print("SICHER")
