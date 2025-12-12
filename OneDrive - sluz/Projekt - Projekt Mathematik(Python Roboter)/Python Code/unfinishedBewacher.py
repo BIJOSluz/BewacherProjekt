@@ -1,4 +1,4 @@
-
+# Teammitglieder: Joshua, Benno, Patrik
 #!/usr/bin/env pybricks-micropython
 # Square drive helper for EV3 (1x1 meter continuous square)
 
